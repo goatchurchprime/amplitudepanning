@@ -9,7 +9,7 @@ var phase = 0.0
 var predictedrms = 0.0
 
 func _ready():
-	sample_hz = 22050.0
+	sample_hz = AudioServer.get_mix_rate()/2.0
 	$SoundSource/AudioStreamPlayer3D.stream.mix_rate = sample_hz
 
 func setsoundfreqon(lpulse_hz, lpanningstrength):
