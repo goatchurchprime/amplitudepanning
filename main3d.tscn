@@ -116,6 +116,7 @@ text = "Pan strength:"
 
 [node name="PanningStrength" type="OptionButton" parent="HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Set to 2.0 to get 1.0 since the global panning strength is 0.5"
 selected = 0
 item_count = 5
 popup/item_0/text = "1.0"
