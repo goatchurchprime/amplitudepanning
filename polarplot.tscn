@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddg82a1p37vk"]
+
+[ext_resource type="Script" uid="uid://mljlgri4ksw3" path="res://polarplot.gd" id="1_ctyly"]
+[ext_resource type="Script" uid="uid://cavakxfd7bwcv" path="res://singleplot.gd" id="2_0x141"]
+
+[node name="PolarPlot" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 300.0
+script = ExtResource("1_ctyly")
+
+[node name="MultiPlot" type="Node2D" parent="."]
+position = Vector2(200, 200)
+scale = Vector2(100, 100)
+script = ExtResource("2_0x141")
+
+[node name="Polygons" type="Node2D" parent="MultiPlot"]
+
+[node name="Line2Dxaxis" type="Line2D" parent="MultiPlot"]
+points = PackedVector2Array(1, 0, -1, 0)
+width = 0.01
+default_color = Color(0.0392157, 0.00392157, 1, 0.6)
+
+[node name="Line2Dyaxis" type="Line2D" parent="MultiPlot"]
+points = PackedVector2Array(0, 1, 0, -1)
+width = 0.01
+default_color = Color(0.0392157, 0.00392157, 1, 0.6)
+
+[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]

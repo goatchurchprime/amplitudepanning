@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://dk70f2x6168yn"]
+
+[ext_resource type="Script" uid="uid://ss8iv7kudj5i" path="res://main3dsteam.gd" id="1_av5ub"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+shading_mode = 0
+albedo_color = Color(0.411765, 0.835294, 0.823529, 1)
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_noarx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a202f"]
+shading_mode = 0
+albedo_color = Color(0.819615, 0.807321, 7.70092e-07, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4xowi"]
+material = SubResource("StandardMaterial3D_a202f")
+top_radius = 0.1
+bottom_radius = 0.0
+height = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_av5ub"]
+size = Vector3(0.5, 1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r7qjm"]
+size = Vector3(0.5, 1, 2)
+
+[sub_resource type="SteamAudioMaterial" id="SteamAudioMaterial_u2hjt"]
+absorption_low = 1.0
+absorption_mid = 1.0
+absorption_high = 1.0
+
+[node name="Main3D" type="Node3D"]
+script = ExtResource("1_av5ub")
+
+[node name="SteamAudioConfig" type="SteamAudioConfig" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+
+[node name="Listener" type="Node3D" parent="."]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Listener"]
+transform = Transform3D(0.0208901, 0.999782, 0, -0.992425, 0.0207364, 0.12109, 0.121063, -0.00252958, 0.992642, -0.00605336, 0.0920025, 0)
+radius = 0.1
+height = 0.312109
+material = SubResource("StandardMaterial3D_noarx")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Listener"]
+current = true
+
+[node name="SteamAudioListener" type="SteamAudioListener" parent="Listener"]
+
+[node name="SoundSource" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.667, 0, 0)
+
+[node name="AudioStreamPlayer3D" type="SteamAudioPlayer" parent="SoundSource"]
+reflection = true
+stream = SubResource("AudioStreamGenerator_noarx")
+attenuation_model = 3
+volume_db = 16.703
+panning_strength = 0.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SoundSource"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_4xowi")
+
+[node name="Display2D" type="Node2D" parent="."]
+
+[node name="PolygonLeft" type="Polygon2D" parent="Display2D"]
+z_index = -1000
+color = Color(1, 1, 0.454902, 0.447059)
+polygon = PackedVector2Array(266, 85, -207, 295, -411, -258, 247, -248)
+
+[node name="PolygonRight" type="Polygon2D" parent="Display2D"]
+z_index = -1000
+color = Color(0.270588, 1, 1, 0.290196)
+polygon = PackedVector2Array(266, 85, -207, 295, -411, -258, 247, -248)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.78715, 0, 0.616761, 0, 1, 0, -0.616761, 0, 0.78715, -1.64069, 0, 0.666306)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_av5ub")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_r7qjm")
+
+[node name="SteamAudioGeometry" type="SteamAudioGeometry" parent="StaticBody3D/CollisionShape3D"]
+material = SubResource("SteamAudioMaterial_u2hjt")

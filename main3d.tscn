@@ -1,0 +1,177 @@
+[gd_scene load_steps=9 format=3 uid="uid://efhwh1xv2rf0"]
+
+[ext_resource type="Script" uid="uid://b61dh6b4iurd3" path="res://main3d.gd" id="1_sk41h"]
+[ext_resource type="PackedScene" uid="uid://ddg82a1p37vk" path="res://polarplot.tscn" id="2_fxs24"]
+[ext_resource type="Script" uid="uid://5ruuuv7wj0yf" path="res://soundscene.gd" id="3_pmjbp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+shading_mode = 0
+albedo_color = Color(0.411765, 0.835294, 0.823529, 1)
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_noarx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a202f"]
+shading_mode = 0
+albedo_color = Color(0.819615, 0.807321, 7.70092e-07, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4xowi"]
+material = SubResource("StandardMaterial3D_a202f")
+top_radius = 0.1
+bottom_radius = 0.0
+height = 0.2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmjbp"]
+bg_color = Color(0.485726, 0.372511, 0.0726699, 1)
+
+[node name="Main3D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sk41h")
+
+[node name="PolarPlot" parent="." instance=ExtResource("2_fxs24")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PolarPlot2" parent="." instance=ExtResource("2_fxs24")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SoundScene" type="Node3D" parent="."]
+script = ExtResource("3_pmjbp")
+
+[node name="Camera3D" type="Camera3D" parent="SoundScene"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+current = true
+
+[node name="Listener" type="Node3D" parent="SoundScene"]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="SoundScene/Listener"]
+transform = Transform3D(0.0208901, 0.999782, 0, -0.992425, 0.0207364, 0.12109, 0.121063, -0.00252958, 0.992642, -0.00605336, 0.0920025, 0)
+radius = 0.1
+height = 0.312109
+material = SubResource("StandardMaterial3D_noarx")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="SoundScene/Listener"]
+current = true
+
+[node name="SoundSource" type="Node3D" parent="SoundScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.667, 0, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SoundScene/SoundSource"]
+stream = SubResource("AudioStreamGenerator_noarx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SoundScene/SoundSource"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_4xowi")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 139.0
+offset_bottom = 40.0
+
+[node name="StartSampling" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_pmjbp")
+text = "Start"
+
+[node name="SecondPlot" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+text = "Second Plot"
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Frequency:"
+
+[node name="SourceSoundFreq" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "440Hz"
+popup/item_0/id = 0
+popup/item_1/text = "200Hz"
+popup/item_1/id = 1
+popup/item_2/text = "2000Hz"
+popup/item_2/id = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Pan strength:"
+
+[node name="PanningStrength" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "1.0"
+popup/item_0/id = 0
+popup/item_1/text = "2.0"
+popup/item_1/id = 1
+popup/item_2/text = "0.5"
+popup/item_2/id = 2
+popup/item_3/text = "0.0"
+popup/item_3/id = 3
+popup/item_4/text = "1.8"
+popup/item_4/id = 4
+
+[node name="Label3" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Distance:"
+
+[node name="SourceDistance" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "1.0m"
+popup/item_0/id = 0
+popup/item_1/text = "2.0m"
+popup/item_1/id = 1
+popup/item_2/text = "3.0m"
+popup/item_2/id = 2
+popup/item_3/text = "8.0m"
+popup/item_3/id = 3
+
+[node name="Label4" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Y-alt"
+
+[node name="Yaltitude" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "0m"
+popup/item_0/id = 0
+popup/item_1/text = "1m"
+popup/item_1/id = 1
+popup/item_2/text = "3m"
+popup/item_2/id = 2
+popup/item_3/text = "-1m"
+popup/item_3/id = 3
+
+[node name="Combined" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+text = "Combined"
+
+[node name="Predicted" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+text = "Predicted"
+
+[connection signal="pressed" from="HBoxContainer/StartSampling" to="." method="_on_start_sampling_pressed"]
+[connection signal="toggled" from="HBoxContainer/SecondPlot" to="." method="_on_second_plot_toggled"]
+
+[editable path="PolarPlot"]
